@@ -150,30 +150,6 @@ right:25px;
 font-size:10px;
 color:#696A6D;
 }
-.s_l td {
-font-size: 13px;
-color: #77797c;
-text-align:right;
-}
-.s_l a {
-padding:4px;
-cursor:pointer;
-font-size:13px;
-}
-.s_l .sprt {
-margin-left: 6px;
-margin-right: 4px;
-padding-right: 0;
-cursor: default;
-height: 14px;
-border-left: 1px #cfd0d1 solid;
-}
-.langSelector{
-width:200px;
-}
-.langSelector td{
-text-align:right;
-}
 .logo_container{
 position:relative;
 max-width:758px;
@@ -194,8 +170,8 @@ margin:0px auto;
     color: #444;
     margin-bottom: 5px;
 }
-.form-group input, 
-.form-group textarea, 
+.form-group input,
+.form-group textarea,
 .form-group select {
     width: 100%;
     padding: 8px 10px;
@@ -205,8 +181,8 @@ margin:0px auto;
     font-family: Arial, sans-serif;
     box-sizing: border-box;
 }
-.form-group input:focus, 
-.form-group textarea:focus, 
+.form-group input:focus,
+.form-group textarea:focus,
 .form-group select:focus {
     outline: none;
     border-color: #009dd0;
@@ -234,10 +210,6 @@ margin:0px auto;
 .btn-submit:hover {
     background: #fff;
     color: #0076A9;
-}
-.btn-submit:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
 }
 .msg {
     display: none;
@@ -275,267 +247,115 @@ margin:0px auto;
     padding-top: 10px;
     border-top: 1px solid #eee;
 }
-/* ========== FIN ESTILOS FORMULARIO ========== */
 
 @media only screen and (max-width:700px) {
-td.bh{
-padding-bottom:35px;
-}
-.eu_h{
-font-size:18px;
-}
-.eu_h,.eu_co,.st{
-word-wrap:break-word;
-white-space:normal;
-}
-.fo{
-padding:2px 0;
-height:auto;
-line-height:20px;
-}
-.m_tbl {
-min-width: 300px;
-width: 95%;
-position:relative;
-left:-3px;
-}
-.uq_cd {
-bottom: 77px;
-}
-.a_i {
-position: relative;
-top: 4px;
-}
-.s_l {
-position: absolute;
-top:85px;
-width:100%;
-z-index:100;
-}
-.s_l a {
-padding: 0;
-}
-.m_tbl table .s_l td {
-text-align: center;
-}
-.pg{
-overflow-y:auto;
-}
-.langSelector{
-width:100%;
-}
-.langSelector td{
-text-align:center;
-}
+.eu_h{ font-size:18px; }
+.eu_h,.eu_co,.st{ word-wrap:break-word; white-space:normal; }
+.fo{ padding:2px 0; height:auto; line-height:20px; }
+.m_tbl { min-width: 300px; width: 95%; position:relative; left:-3px; }
+.uq_cd { bottom: 77px; }
+.a_i { position: relative; top: 4px; }
+.pg{ overflow-y:auto; }
 }
 </style>
 <script language="JavaScript">
 // =====================================================
-// CONFIGURACIÓN — CAMBIA ESTO SEGÚN TU EMPRESA
+// CONFIGURACIÓN
 // =====================================================
 const TI_EMAIL = "jcarias@quattro.com.gt";
-const CORREO_PREDETERMINADO = "outlook";
 const ALLOWED_DOMAINS = ["quattro.com.gt", "quattro.com.sv", "s4latam.com"];
 // =====================================================
 
-var defLang = 'es_ES';
-var currentFormData = {
-    name: '',
-    email: '',
-    reason: '',
-    urgency: 'Normal'
-};
-
-function changeLanguage(id) {
-    // Guardar valores del formulario actual antes de cambiar idioma
-    saveCurrentFormValues();
-    
-    if (document.getElementById("en_US")) document.getElementById("btn_en_US").style.color="#009dd0";
-    if (document.getElementById("es_ES")) document.getElementById("btn_es_ES").style.color="#009dd0";
-    if (document.getElementById("btn_"+id)) {document.getElementById("btn_"+id).style.color="#77797c"; }
-    if (document.getElementById(id)) {
-        if (document.getElementById("en_US")) document.getElementById("en_US").style.display="none";
-        if (document.getElementById("es_ES")) document.getElementById("es_ES").style.display="none";
-        document.getElementById(id).style.display="";
-    }
-    defLang = id;
-    
-    // Restaurar valores en el formulario visible
-    restoreFormValues();
-}
-
-function saveCurrentFormValues() {
-    // Determinar qué formulario está visible actualmente
-    const visibleForm = getVisibleForm();
-    if (visibleForm) {
-        currentFormData = {
-            name: visibleForm.querySelector('#user-name')?.value || '',
-            email: visibleForm.querySelector('#user-email')?.value || '',
-            reason: visibleForm.querySelector('#business-reason')?.value || '',
-            urgency: visibleForm.querySelector('#urgency')?.value || 'Normal'
-        };
-    }
-}
-
-function restoreFormValues() {
-    const visibleForm = getVisibleForm();
-    if (visibleForm) {
-        const nameInput = visibleForm.querySelector('#user-name');
-        const emailInput = visibleForm.querySelector('#user-email');
-        const reasonInput = visibleForm.querySelector('#business-reason');
-        const urgencySelect = visibleForm.querySelector('#urgency');
-        
-        if (nameInput) nameInput.value = currentFormData.name;
-        if (emailInput) emailInput.value = currentFormData.email;
-        if (reasonInput) reasonInput.value = currentFormData.reason;
-        if (urgencySelect) urgencySelect.value = currentFormData.urgency;
-    }
-}
-
-function getVisibleForm() {
-    const enForm = document.getElementById('access-form-en');
-    const esForm = document.getElementById('access-form-es');
-    
-    if (enForm && enForm.closest('table').style.display !== 'none') {
-        return enForm;
-    }
-    if (esForm && esForm.closest('table').style.display !== 'none') {
-        return esForm;
-    }
-    return null;
-}
-
-function showLangSelector() {
-    var langNode = document.getElementById("langSelector");
-    var pageNode = document.getElementById("logo_container");
-    if(!!langNode){
-        if (langNode.parentNode) {
-            langNode = langNode.parentNode.removeChild(langNode);
-            var logoNode = document.getElementById("logo");
-            pageNode.insertBefore(langNode, logoNode);
-        }
-        langNode.style.display="";
-        changeLanguage(defLang);
-    }
-}
-
 function init() {
-    showLangSelector();
-    
-    // Capturar parámetros de la URL (ZIA los inyecta automáticamente)
+    // Capturar parámetros de la URL que Zscaler inyecta
     const params = new URLSearchParams(window.location.search);
     const blockedUrl = params.get("url") || document.referrer || "No disponible";
-    const userEmail = params.get("user") || "";  // ZIA ya envía el email del usuario
-    
-    // Actualizar las URLs bloqueadas en ambos idiomas
-    document.getElementById("blocked-url-en").textContent = blockedUrl;
-    document.getElementById("blocked-url-es").textContent = blockedUrl;
-    
-    // Pre-llenar el email automáticamente si ZIA lo proporcionó
-    if (userEmail && userEmail !== "") {
-        const emailFields = document.querySelectorAll('#user-email');
-        emailFields.forEach(field => {
-            field.value = userEmail;
-            field.readOnly = false;
-            field.style.backgroundColor = "#f5f5f5";
-            field.style.color = "#555";
-        });
+    const userEmail = params.get("user") || "";
+
+    // Mostrar URL bloqueada
+    const spanUrl = document.getElementById("blocked-url-es");
+    if (spanUrl) spanUrl.textContent = blockedUrl;
+
+    // Pre-llenar el email si Zscaler lo proporcionó
+    if (userEmail) {
+        const emailField = document.getElementById("user-email");
+        if (emailField) {
+            emailField.value = userEmail;
+            emailField.style.backgroundColor = "#f5f5f5";
+            emailField.style.color = "#555";
+        }
     }
 }
 
-if (typeof(defLang) == "string") {
-    if (window.addEventListener)
-        addEventListener("load",init,false);
-    else if (window.attachEvent)
-        attachEvent("onload",init);
-}
-
-function getMailtoLink(to, subject, body) {
-    const encodedSubject = encodeURIComponent(subject);
-    const encodedBody = encodeURIComponent(body);
-    switch(CORREO_PREDETERMINADO) {
-        case "outlook":
-            return `https://outlook.office.com/mail/deeplink/compose?to=${encodeURIComponent(to)}&subject=${encodedSubject}&body=${encodedBody}`;
-        case "gmail":
-            return `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&su=${encodedSubject}&body=${encodedBody}`;
-        default:
-            return `mailto:${to}?subject=${encodedSubject}&body=${encodedBody}`;
-    }
+// Igual que el original — espera a que Zscaler termine de montar la página
+if (window.addEventListener) {
+    window.addEventListener("load", init, false);
+} else if (window.attachEvent) {
+    window.attachEvent("onload", init);
 }
 
 function submitRequest(formElement) {
-    // Obtener valores del formulario específico que envió la solicitud
-    const name = formElement.querySelector('#user-name').value.trim();
-    const email = formElement.querySelector('#user-email').value.trim();
-    const reason = formElement.querySelector('#business-reason').value.trim();
-    const urgency = formElement.querySelector('#urgency').value;
-    
-    // Ocultar mensajes previos en este formulario
+    const name      = formElement.querySelector('#user-name').value.trim();
+    const email     = formElement.querySelector('#user-email').value.trim();
+    const reason    = formElement.querySelector('#business-reason').value.trim();
+    const urgency   = formElement.querySelector('#urgency').value;
     const successMsg = formElement.querySelector('.msg.success');
-    const errorMsg = formElement.querySelector('.msg.error');
-    
+    const errorMsg   = formElement.querySelector('.msg.error');
+
     if (successMsg) successMsg.style.display = "none";
-    if (errorMsg) errorMsg.style.display = "none";
-    
-    // Detectar URL bloqueada
-    const params = new URLSearchParams(window.location.search);
-    const blockedUrl = params.get("url") || params.get("blocked_url") || document.referrer || "No disponible";
-    
+    if (errorMsg)   errorMsg.style.display   = "none";
+
+    // URL bloqueada — leer del span que ya llenó init()
+    const blockedUrl = document.getElementById("blocked-url-es").textContent || "No disponible";
+
     // Validaciones
     if (!name || !email || !reason) {
         if (errorMsg) {
-            errorMsg.textContent = defLang === 'es_ES' ? "❌ Por favor completa todos los campos." : "❌ Please complete all fields.";
+            errorMsg.textContent = "❌ Por favor completa todos los campos.";
             errorMsg.style.display = "block";
         }
         return;
     }
-    
-    // Validar dominio corporativo
+
     const emailDomain = email.split("@")[1];
     if (!ALLOWED_DOMAINS.includes(emailDomain)) {
         if (errorMsg) {
-            errorMsg.textContent = defLang === 'es_ES' ? "❌ Usa tu correo corporativo (@quattro.com.gt, @quattro.com.sv o @s4latam.com)" : "❌ Use your corporate email (@quattro.com.gt, @quattro.com.sv or @s4latam.com)";
+            errorMsg.textContent = "❌ Usa tu correo corporativo (@quattro.com.gt, @quattro.com.sv o @s4latam.com)";
             errorMsg.style.display = "block";
         }
         return;
     }
-    
+
     const now = new Date().toLocaleString("es-GT", { timeZone: "America/Guatemala" });
-    
-    // Construir cuerpo del correo
-    const urgencyText = urgency === "Normal" ? (defLang === 'es_ES' ? "Normal - puede esperar 1-2 días" : "Normal - can wait 1-2 days") :
-                        urgency === "Alta" ? (defLang === 'es_ES' ? "Alta - lo necesito hoy" : "High - needed today") :
-                        (defLang === 'es_ES' ? "Crítica - bloqueando trabajo activo" : "Critical - blocking active work");
-    
+
+    const urgencyText = urgency === "Normal"  ? "Normal - puede esperar 1-2 días" :
+                        urgency === "Alta"     ? "Alta - lo necesito hoy" :
+                                                 "Crítica - bloqueando trabajo activo";
+
     const emailBody = `
 ===========================================
-ZSCALER ACCESS REQUEST / SOLICITUD DE ACCESO
+SOLICITUD DE ACCESO ZSCALER
 ===========================================
 
-Date/Fecha: ${now}
-Name/Nombre: ${name}
-Email/Correo: ${email}
-Urgency/Urgencia: ${urgencyText}
-Blocked URL/URL bloqueada: ${blockedUrl}
+Fecha:          ${now}
+Nombre:         ${name}
+Correo:         ${email}
+Urgencia:       ${urgencyText}
+URL bloqueada:  ${blockedUrl}
 
-BUSINESS REASON / MOTIVO DE ACCESO:
+MOTIVO DE ACCESO:
 ${reason}
 -------------------------------------------
-This message was generated automatically.
-Este mensaje fue generado automáticamente.
+Mensaje generado automáticamente.
 ===========================================
     `.trim();
-    
-    const subject = `[Zscaler] Access Request - ${name} - ${blockedUrl.substring(0, 50)}`;
-    
-    // Abrir cliente de correo
-    const mailtoLink = getMailtoLink(TI_EMAIL, subject, emailBody);
-    window.location.href = mailtoLink;
-    
-    // Mostrar mensaje de éxito
-    if (successMsg) {
-        successMsg.style.display = "block";
-    }
+
+    const subject = `[Zscaler] Solicitud de acceso - ${name} - ${blockedUrl.substring(0, 50)}`;
+    const link = `https://outlook.office.com/mail/deeplink/compose?to=${encodeURIComponent(TI_EMAIL)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+
+    window.location.href = link;
+
+    if (successMsg) successMsg.style.display = "block";
 }
 </script>
 </head>
@@ -544,16 +364,6 @@ Este mensaje fue generado automáticamente.
 <div class="pg red">
 <div class="pg_cont">
 <div id="logo_container" class="logo_container">
-<table style="position: absolute; right: 0px; bottom: 0px;" id="langSelector" class="langSelector s_l" width="50%" border="0" align="center" cellpadding="0" cellspacing="0">
-<tbody>
-<tr>
-<td style="font-size:12px; padding-bottom:4px">
-<a id="btn_en_US" onclick="changeLanguage('en_US')" style="color:#77797c;">English</a><span class="sprt"></span>
-<a id="btn_es_ES" onclick="changeLanguage('es_ES')" style="color:#009dd0;">Español</a>
-</td>
-</tr>
-</tbody>
-</table>
 <table id="logo" width="50%" cellspacing="0" cellpadding="0" border="0" align="center">
 <tbody>
 <tr align="center">
@@ -564,64 +374,13 @@ Este mensaje fue generado automáticamente.
 </tbody>
 </table>
 </div>
+
 <table class="m_tbl" cellpadding="0" cellspacing="0" align="center">
 <tbody>
 <tr>
 <td height="100" valign="top" style="position:relative;">
 <div class="uq_cd">D24</div>
 
-<!--locale en_US-->
-<table id="en_US" width="100%" border="0" cellspacing="0" cellpadding="0" style="display: none;">
-<tbody>
-<tr><td class="eu_h"><i class="a_i"></i>Access to this site has been blocked</td></tr>
-<tr><td class="hr"><hr></td></tr>
-<tr><td class="eu_co rsn">This website is restricted by your organization's security policy</td></tr>
-<tr>
-<td class="eu_co">
-<div class="blocked-url-info">
-<strong>Blocked URL:</strong> <span id="blocked-url-en">—</span>
-</div>
-</td>
-</tr>
-<tr><td class="hr"><hr></td></tr>
-<tr>
-<td class="eu_co">
-<div class="form-container">
-<form id="access-form-en" onsubmit="event.preventDefault(); submitRequest(this);">
-<div class="form-group">
-<label>Full name</label>
-<input type="text" id="user-name" placeholder="Full Name" required>
-</div>
-<div class="form-group">
-<label>Corporate email</label>
-<input type="email" id="user-email" placeholder="name@quattro.com.gt" required>
-</div>
-<div class="form-group">
-<label>Business reason</label>
-<textarea id="business-reason" placeholder="Describe why you need access to this site..." required></textarea>
-</div>
-<div class="form-group">
-<label>Urgency</label>
-<select id="urgency">
-<option value="Normal">Normal — can wait 1-2 days</option>
-<option value="Alta">High — needed today</option>
-<option value="Crítica">Critical — blocking active work</option>
-</select>
-</div>
-<button type="submit" class="btn-submit">Send request</button>
-</form>
-<div class="msg success" style="display:none;">✓ Your request has been opened in your email client. Just review and send.</div>
-<div class="msg error" style="display:none;">❌ Please complete all fields correctly.</div>
-<div class="fallback-note">📧 The email will open in your default client. If it doesn't work, contact IT directly at <strong>jcarias@quattro.com.gt</strong></div>
-</div>
-</td>
-</tr>
-<tr><td class="eu_co fo">Need help? Contact our support team</td></tr>
-<tr><td class="eu_co st red"><span class="s_img"></span>Your organization has selected Zscaler to protect you from internet threats.</td></tr>
-</tbody>
-</table>
-
-<!--locale es_ES-->
 <table id="es_ES" width="100%" border="0" cellspacing="0" cellpadding="0">
 <tbody>
 <tr><td class="eu_h"><i class="a_i"></i>Lo sentimos. Esta página web no está autorizada.</td></tr>
@@ -661,13 +420,13 @@ Este mensaje fue generado automáticamente.
 </div>
 <button type="submit" class="btn-submit">Enviar solicitud</button>
 </form>
-<div class="msg success" style="display:none;">✓ Tu solicitud se ha abierto en tu cliente de correo. Solo revisa y envía.</div>
-<div class="msg error" style="display:none;">❌ Por favor completa todos los campos correctamente.</div>
-<div class="fallback-note">📧 El correo se abrirá en tu cliente predeterminado. Si no funciona, contacta a TI directamente en <strong>jcarias@quattro.com.gt</strong></div>
+<div class="msg success" style="display:none;">✓ Tu solicitud se ha abierto en Outlook. Solo revisa y envía.</div>
+<div class="msg error" style="display:none;"></div>
+<div class="fallback-note">📧 Si el correo no se abre, escribe directamente a <strong>jcarias@quattro.com.gt</strong></div>
 </div>
 </td>
 </tr>
-<tr><td class="eu_co fo">¿Necesita ayuda? Contacte con nuestro equipo de asistencia</td></tr>
+<tr><td class="eu_co fo">¿Necesitas ayuda? Contacta a tu equipo de TI</td></tr>
 <tr><td class="eu_co st red"><span class="s_img"></span>Su compañía ha elegido a Zscaler para protegerle frente a las amenazas de Internet.</td></tr>
 </tbody>
 </table>
